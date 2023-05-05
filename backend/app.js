@@ -1,8 +1,12 @@
 const express = require("express");
 const multer = require("multer");
 const path = require("path");
+const connectDB = require("./config/db");
 const errorMiddleware = require("./errorHandler");
 const app = express();
+
+
+connectDB();
 
 const storageEngine = multer.diskStorage({
   destination: "./uploads/images",
