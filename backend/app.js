@@ -1,6 +1,7 @@
 const express = require("express");
 const multer = require("multer");
 const path = require("path");
+const errorMiddleware = require("./errorHandler");
 const app = express();
 
 const storageEngine = multer.diskStorage({
@@ -28,7 +29,7 @@ const checkFileType = (file, cb) => {
 const upload = multer({
   storage: storageEngine,
   limits: {
-    fileSize: 10000000,
+    fileSize: 1000000,
   },
   fileFilter: (req, file, cb) => {
     checkFileType(file, cb);
@@ -37,11 +38,23 @@ const upload = multer({
 
 app.post("/upload", upload.single("image"), (req, res) => {
   if (req.file) {
-    res.status(200).send("Single file uploaded successfully");
+    res.status(200).json({
+      message: "Image uploaded successfully",
+      imageID: req.file.filename,
+    });
   } else {
     res.status(400).send("Please upload a valid image")
   }
 })
+
+app.get("/img/:imgID", () => {
+  let id = req.params.imgID;
+
+
+})
+
+
+app.use(errorMiddleware)
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
