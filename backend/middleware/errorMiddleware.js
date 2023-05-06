@@ -1,6 +1,6 @@
 const { NODE_ENV } = require("../config/env");
 
-const errorMiddleware = (err, req, res, next) => {
+const errorHandler = (err, req, res, next) => {
   let errStatus = res.status || 500;
   let errMessage = err.message || "An issue occured while processing your request, try again later"
 
@@ -12,4 +12,4 @@ const errorMiddleware = (err, req, res, next) => {
   })
 }
 
-module.exports = errorMiddleware;
+module.exports = errorHandler;

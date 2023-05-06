@@ -1,4 +1,5 @@
 const asyncHandler = require("express-async-handler");
+const path = require("path");
 const Image = require("../models/imageModel");
 
 
@@ -26,9 +27,15 @@ const uploadImage = asyncHandler(async (req, res) => {
 const getImage = asyncHandler(async (req, res) => {
   const imageID = req.params.imageID;
 
-  res.status(200).json({
-    message: `You're looking for the image with ID: ${imageID}`
-  })
+  const requestedImage = await Image.findById(imageID);
+  //* Check if the requested image ID is present in the database
+  if(!requestedImage){
+    res.status(400);
+    throw new Error("The requested image does not exist, make sure the ID in your request is correct");
+  }
+
+  let imagePath = path.resolve(__dirname, "../uploads/images/", requestedImage.fileLocation);
+  res.status(200).sendFile(imagePath);
 })
 
 
