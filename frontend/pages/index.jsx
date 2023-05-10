@@ -1,93 +1,34 @@
 import Image from 'next/image'
-import styles from '../styles/index.module.css';
-import vercelLogo from "../public/images/vercel.svg";
-import nextLogo from "../public/images/next.svg";
+import style from '../styles/index.module.css';
+import mainImage from "../public/images/image.svg";
+import Head from 'next/head';
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src={vercelLogo}
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              priority
-            />
-          </a>
+    <>
+      <Head>
+        <title>Upload your image here!</title>
+      </Head>
+      <main className={style.container}>
+        <h1>Upload your image</h1>
+        <div className={style.fileClarifications}>
+          <h2>File should be a valid image</h2>
+          <span>JPEG, JPG, PNG, SVG or GIF</span>
         </div>
-      </div>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src={nextLogo}
-          alt="Next.js Logo"
-          priority
-        />
-      </div>
+        <section className={style.imageDrop}>
+          <Image
+            src={mainImage}
+            alt="Drag and drop your image here to upload it"
+            priority
+          />
+          <p>Drag & drop your image here</p>
+        </section>
 
-      <div className={styles.grid}>
-        <a
-          href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+        <p>Or</p>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+        <button>Choose a file</button>
+      </main>
+    </>
   )
 }
