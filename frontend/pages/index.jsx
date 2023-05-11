@@ -27,7 +27,7 @@ export default function Home() {
 
         <p>Or</p>
 
-        <button>Choose a file</button>
+        <button className={style.fileButton}>Choose a file</button>
       </main>
     </>
   )

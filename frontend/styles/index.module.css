@@ -11,7 +11,7 @@
 }
 
 .fileClarifications {
-  margin: .1em 0 .75em;
+  margin: .1em 0 2em;
 }.fileClarifications h2 {
   color: #828282;
   font-size: 1rem;
@@ -26,13 +26,39 @@
 }
 
 .imageDrop {
-  width: 90%;
+  width: 80%;
   margin: 0 auto;
-  padding: 2em 0;
+  padding: 3em 0;
   display: flex;
   flex-direction: column;
   background-color: var(--lightBlue);
   border: 2px dashed var(--borderBlue);
   border-radius: 8px;
   align-items: center;
+  row-gap: 2em;
+  margin-bottom: 1em;
+}.imageDrop p{
+  color: var(--lightGrey);
+}
+
+.imageDrop ~ p {
+  color: var(--midGrey);
+  margin-bottom: 1.5em;
+}
+
+.fileButton{
+  cursor: pointer;
+  width: 70%;
+  max-width: 150px;
+  background-color: var(--deepBlue);
+  padding: .5em 0;
+  border-radius: 8px;
+  color: var(--white);
+  outline: none;
+  border: none;
+}
+
+.fileButton:hover, .fileButton:focus{
+  opacity: 65%;
+  transform: scale(.98);
 }
