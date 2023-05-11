@@ -1,0 +1,14 @@
+.container{
+  margin-top: 3em;
+  display: flex;
+  flex-direction: column;
+  row-gap: .25em;
+  align-items: center;
+  justify-content: center;
+  color: var(--midGrey);
+
+}
+
+.attribution a{
+  color: var(--darkGrey);
+}
