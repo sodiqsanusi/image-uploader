@@ -2,6 +2,7 @@ import Image from 'next/image'
 import style from '../styles/index.module.css';
 import mainImage from "../public/images/image.svg";
 import Head from 'next/head';
+import Loader from '@/components/Loader';
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
         <title>Upload your image here!</title>
       </Head>
       <main className={style.container}>
+        <Loader />
         <h1>Upload your image</h1>
         <div className={style.fileClarifications}>
           <h2>File should be a valid image</h2>
