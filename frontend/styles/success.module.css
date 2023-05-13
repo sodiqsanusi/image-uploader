@@ -1,0 +1,65 @@
+.container {
+  background-color: var(--white);
+  text-align: center;
+  padding: 3em 2em;
+}
+
+.container > svg {
+  fill: #219653;
+  width: 3rem;
+  height: 3rem;
+  margin: 1em auto;
+}
+
+.container h1 {
+  color: var(--darkGrey);
+  font-size: 1.5rem;
+  margin-bottom: .5em;
+}
+
+.imgContainer {
+  height: max(45vh, 20rem);
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+} .imgContainer img{
+  object-fit: cover;
+  max-height: 100%;
+  border-radius: 12px;
+}
+
+.copyLinkContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .5em;
+  padding-left: .75em;
+  border: 1px solid #e0e0e0;
+  background-color: #f6f8fb;
+  font-size: .8rem;
+  border-radius: 8px;
+}.copyLinkContainer p{
+  width: 75%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}.copyLinkContainer button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20%;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  outline: none;
+  padding: .75em 0;
+  color: var(--white);
+  background-color: var(--deepBlue);
+}.copyLinkContainer button:hover, .copyLinkContainer button:focus{
+  opacity: 80%;
+} .copyLinkContainer svg{
+  width: 1rem;
+  height: 1rem;
+}
