@@ -62,3 +62,7 @@
   opacity: 65%;
   transform: scale(.98);
 }
+
+.fileInput{
+  display: none;
+}

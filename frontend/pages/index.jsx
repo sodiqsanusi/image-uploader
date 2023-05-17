@@ -4,8 +4,23 @@ import mainImage from "../public/images/image.svg";
 import Head from 'next/head';
 import Loader from '@/components/Loader';
 import Copyright from '@/components/Copyright';
+import { useRef } from 'react';
 
 export default function Home() {
+
+  let fileInputRef = useRef(null)
+
+  let imageFile
+  let handleAddFile = async () => {
+    [imageFile] = await window.showOpenFilePicker();
+    console.log(imageFile);
+    let realFile = await imageFile.getFile();
+    console.log(realFile);
+  }
+  let clickFileInput = () => {
+    fileInputRef.current.click();
+  }
+
   return (
     <>
       <Head>
@@ -30,8 +45,13 @@ export default function Home() {
 
         <p>Or</p>
 
-        <button className={style.fileButton}>Choose a file</button>
-
+        <input type="file" name="chooseFile" id="chooseFile" className={style.fileInput} 
+         accept=".jpeg,.jpg,.png,.svg,.gif" ref={fileInputRef} onChange={handleAddFile}
+        />
+        <button className={style.fileButton}
+          onClick={clickFileInput}
+        >Choose a file</button>
+                 
         <Copyright />
       </main>
     </>
