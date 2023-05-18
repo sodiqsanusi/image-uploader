@@ -23,7 +23,12 @@ export default function Home() {
     return true;
   }
 
-  let imageFile
+  let checkFileSize = (uploadedFileSize) => {
+    let imageSizeLimit = 1000000;
+
+    return imageSizeLimit >= uploadedFileSize;
+  }
+
   let handleAddFile = async (e) => {
     let imageFile = e.target.files[0]
     if (!imageFile) {
@@ -34,6 +39,7 @@ export default function Home() {
       setClientError(noImagePresent);
       return;
     }
+    ////doneTodo: Confirm that the file sent is an image file that has been specified
     if (!checkFileType(imageFile.type)) {
       let wrongFileTypeError = {
         error: true,
@@ -42,10 +48,18 @@ export default function Home() {
       setClientError(wrongFileTypeError);
       return;
     }
-    console.log(imageFile);
-    //todo: Confirm that the file sent is an image file that has been specified
-    //todo: Also make sure that the file size of the uploaded file is less than 1mb
+    ////doneTodo: Also make sure that the file size of the uploaded file is less than 1mb
+    if (!checkFileSize(imageFile.size)) {
+      let largeFileSizeError = {
+        error: true,
+        message: "Only image files of 1MB of size and smaller will be uploaded. Upload a smaller image"
+      }
+
+      setClientError(largeFileSizeError);
+      return;
+    }
     //! If any of the checks fail, send an error toast with the right message and exit the upload process
+    console.log(imageFile);
   }
   let clickFileInput = () => {
     fileInputRef.current.click();
