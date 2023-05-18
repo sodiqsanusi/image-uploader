@@ -5,6 +5,8 @@ import Head from 'next/head';
 import Loader from '@/components/Loader';
 import Copyright from '@/components/Copyright';
 import { useRef, useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Home() {
 
@@ -52,21 +54,32 @@ export default function Home() {
     if (!checkFileSize(imageFile.size)) {
       let largeFileSizeError = {
         error: true,
-        message: "Only image files of 1MB of size and smaller will be uploaded. Upload a smaller image"
+        message: "Only image files 1MB of size and smaller will be uploaded. Upload a smaller image"
       }
 
       setClientError(largeFileSizeError);
       return;
     }
-    //! If any of the checks fail, send an error toast with the right message and exit the upload process
+    ////doneTodo: If any of the checks fail, send an error toast with the right message and exit the upload process
     console.log(imageFile);
   }
   let clickFileInput = () => {
     fileInputRef.current.click();
   }
-  if (clientError) {
-    console.log(clientError);
+  if (clientError.error) {
+    toast.error(clientError.message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
   }
+
+  //todo: work on the drag and drop feature
 
   return (
     <>
@@ -101,6 +114,18 @@ export default function Home() {
 
         <Copyright />
       </main>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </>
   )
 }
