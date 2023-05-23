@@ -4,17 +4,54 @@ import mainImage from "../public/images/image.svg";
 import Head from 'next/head';
 import Loader from '@/components/Loader';
 import Copyright from '@/components/Copyright';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Home() {
 
   let fileInputRef = useRef(null);
+  let dropzone = useRef(null);
+
   let [clientError, setClientError] = useState({
     error: false,
     message: "",
   });
+
+
+  useEffect(() => {
+    dropzone.current.addEventListener("dragover", handleDragOver);
+    dropzone.current.addEventListener("drop", handleDrop);
+
+    return () => {
+      dropzone.current.removeEventListener("dragover", handleDragOver);
+      dropzone.current.removeEventListener("drop", handleDrop);
+    }
+  }, [])
+
+  let handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
+  let handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    let {files} = e.dataTransfer;
+
+    if(files && files.length == 1){
+      handleAddFile(files)
+      return;
+    }
+
+    let excessFilesError = {
+      error: true,
+      message: "Only one file can be uploaded. Upload a single image",
+    }
+    setClientError(excessFilesError);
+    return; 
+  }
 
   let checkFileType = (uploadedFileType) => {
     let acceptedFileTypes = ["image/jpeg", "image/jpg", "image/png", "image/svg+xml", "image/gif"];
@@ -31,8 +68,8 @@ export default function Home() {
     return imageSizeLimit >= uploadedFileSize;
   }
 
-  let handleAddFile = async (e) => {
-    let imageFile = e.target.files[0]
+  let handleAddFile = async (sentFileList) => {
+    let imageFile = sentFileList[0]
     if (!imageFile) {
       let noImagePresent = {
         error: true,
@@ -94,7 +131,7 @@ export default function Home() {
           <span>JPEG, JPG, PNG, SVG or GIF</span>
         </div>
 
-        <section className={style.imageDrop} onClick={clickFileInput}>
+        <section className={style.imageDrop} onClick={clickFileInput} ref={dropzone}>
           <Image
             src={mainImage}
             alt="Drag and drop your image here to upload it"
@@ -106,7 +143,7 @@ export default function Home() {
         <p>Or</p>
 
         <input type="file" name="chooseFile" id="chooseFile" className={style.fileInput}
-          accept=".jpeg,.jpg,.png,.svg,.gif" ref={fileInputRef} onChange={e => handleAddFile(e)}
+          accept=".jpeg,.jpg,.png,.svg,.gif" ref={fileInputRef} onChange={e => handleAddFile(e.target.files)}
         />
         <button className={style.fileButton}
           onClick={clickFileInput}
