@@ -41,6 +41,9 @@
 }.imageDrop p{
   color: var(--lightGrey);
 }
+.activeImageDrop{
+  border-color: var(--darkGrey);
+}
 
 .imageDrop ~ p {
   color: var(--midGrey);

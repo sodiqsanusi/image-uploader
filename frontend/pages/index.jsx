@@ -17,15 +17,19 @@ export default function Home() {
     error: false,
     message: "",
   });
-
+  let [dragging, setDragging] = useState(false);
 
   useEffect(() => {
     dropzone.current.addEventListener("dragover", handleDragOver);
     dropzone.current.addEventListener("drop", handleDrop);
+    dropzone.current.addEventListener("dragenter", handleDragEnter);
+    dropzone.current.addEventListener("dragleave", handleDragLeave);
 
     return () => {
       dropzone.current.removeEventListener("dragover", handleDragOver);
       dropzone.current.removeEventListener("drop", handleDrop);
+      dropzone.current.removeEventListener("dragenter", handleDragEnter);
+      dropzone.current.removeEventListener("dragenter", handleDragEnter);
     }
   }, [])
 
@@ -37,6 +41,8 @@ export default function Home() {
   let handleDrop = (e) => {
     e.preventDefault();
     e.stopPropagation();
+
+    setDragging(false);
 
     let {files} = e.dataTransfer;
 
@@ -51,6 +57,24 @@ export default function Home() {
     }
     setClientError(excessFilesError);
     return; 
+  }
+
+  let handleDragEnter = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if(e.target === dropzone.current){
+      setDragging(true);
+    }
+  }
+
+  let handleDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if(e.target != dropzone.current){
+      setDragging(false);
+    }
   }
 
   let checkFileType = (uploadedFileType) => {
@@ -114,6 +138,10 @@ export default function Home() {
       progress: undefined,
       theme: "colored",
     });
+    setClientError({
+      error: false,
+      message: "",
+    })
   }
 
   //todo: work on the drag and drop feature
@@ -131,13 +159,19 @@ export default function Home() {
           <span>JPEG, JPG, PNG, SVG or GIF</span>
         </div>
 
-        <section className={style.imageDrop} onClick={clickFileInput} ref={dropzone}>
-          <Image
-            src={mainImage}
-            alt="Drag and drop your image here to upload it"
-            priority
-          />
-          <p>Drag & drop your image here</p>
+        <section className={dragging ? `${style.imageDrop} ${style.activeImageDrop}`: style.imageDrop}
+         onClick={clickFileInput} ref={dropzone}>
+          {!dragging && (
+            <>
+              <Image
+                src={mainImage}
+                alt="Drag and drop your image here to upload it"
+                priority
+              />
+              <p>Drag & drop your image here</p>
+            </>
+          )}
+          {dragging && <p>Drop to upload your image</p>}
         </section>
 
         <p>Or</p>
