@@ -8,7 +8,7 @@ let connectDB = async () => {
     console.log(`Database connection to ${conn.connection.host} was successful`);
   } catch (error) {
     console.log(error);
-    process.exitCode = 1;
+    process.exit(1);
   }
 }
 
