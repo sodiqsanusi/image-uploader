@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const path = require("path");
 const Image = require("../models/imageModel");
+const mongoose = require("mongoose");
 
 
 const uploadImage = asyncHandler(async (req, res) => {
@@ -26,8 +27,10 @@ const uploadImage = asyncHandler(async (req, res) => {
 
 const getImage = asyncHandler(async (req, res) => {
   const imageID = req.params.imageID;
-
-  const requestedImage = await Image.findById(imageID);
+  
+  //* Make sure the ID sent is a valid Mongoose ObjectID 
+  let isIDValid = mongoose.Types.ObjectId.isValid(imageID);
+  const requestedImage = isIDValid && await Image.findById(imageID);
   //* Check if the requested image ID is present in the database
   if(!requestedImage){
     res.status(400);
