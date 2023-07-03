@@ -2,6 +2,8 @@
   background-color: var(--white);
   text-align: center;
   padding: 3em 2em;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .container > svg {

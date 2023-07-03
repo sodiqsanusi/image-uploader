@@ -6,6 +6,7 @@ import Loader from '@/components/Loader';
 import Copyright from '@/components/Copyright';
 import { useEffect, useRef, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
+import { checkFileSize, checkFileType } from '@/utils/fileHelper';
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Home() {
@@ -77,21 +78,6 @@ export default function Home() {
     }
   }
 
-  let checkFileType = (uploadedFileType) => {
-    let acceptedFileTypes = ["image/jpeg", "image/jpg", "image/png", "image/svg+xml", "image/gif"];
-
-    if (acceptedFileTypes.indexOf(uploadedFileType) == -1) {
-      return false;
-    };
-    return true;
-  }
-
-  let checkFileSize = (uploadedFileSize) => {
-    let imageSizeLimit = 1000000;
-
-    return imageSizeLimit >= uploadedFileSize;
-  }
-
   let handleAddFile = async (sentFileList) => {
     let imageFile = sentFileList[0]
     if (!imageFile) {
@@ -133,7 +119,7 @@ export default function Home() {
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
-      pauseOnHover: true,
+      pauseOnHover: false,
       draggable: true,
       progress: undefined,
       theme: "colored",
@@ -161,17 +147,14 @@ export default function Home() {
 
         <section className={dragging ? `${style.imageDrop} ${style.activeImageDrop}`: style.imageDrop}
          onClick={clickFileInput} ref={dropzone}>
-          {!dragging && (
             <>
               <Image
                 src={mainImage}
                 alt="Drag and drop your image here to upload it"
                 priority
               />
-              <p>Drag & drop your image here</p>
+              {dragging ? <p>Drop to upload your image</p> : <p>Drag & drop your image here</p>}
             </>
-          )}
-          {dragging && <p>Drop to upload your image</p>}
         </section>
 
         <p>Or</p>
@@ -194,7 +177,7 @@ export default function Home() {
         rtl={false}
         pauseOnFocusLoss
         draggable
-        pauseOnHover
+        pauseOnHover={false}
         theme="colored"
       />
     </>
