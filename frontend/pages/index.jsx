@@ -24,6 +24,7 @@ export default function Home() {
     message: "",
   });
   let [dragging, setDragging] = useState(false);
+  let [loading, setLoading] = useState(false);
 
   useEffect(() => {
     dropzone.current.addEventListener("dragover", handleDragOver);
@@ -31,12 +32,12 @@ export default function Home() {
     dropzone.current.addEventListener("dragenter", handleDragEnter);
     dropzone.current.addEventListener("dragleave", handleDragLeave);
 
-    return () => {
-      dropzone.current.removeEventListener("dragover", handleDragOver);
-      dropzone.current.removeEventListener("drop", handleDrop);
-      dropzone.current.removeEventListener("dragenter", handleDragEnter);
-      dropzone.current.removeEventListener("dragleave", handleDragLeave);
-    }
+    // return () => {
+    //   dropzone?.current.removeEventListener("dragover", handleDragOver);
+    //   dropzone?.current.removeEventListener("drop", handleDrop);
+    //   dropzone?.current.removeEventListener("dragenter", handleDragEnter);
+    //   dropzone?.current.removeEventListener("dragleave", handleDragLeave);
+    // }
   }, [])
 
   let handleDragOver = (e) => {
@@ -111,12 +112,17 @@ export default function Home() {
       return;
     }
     ////doneTodo: If any of the checks fail, send an error toast with the right message and exit the upload process
-    if(imageFile){
-      let res = await postImageFile(imageFile)
-      console.log(res)
-      return;
-    }
-    router.push('/404');
+    
+    let imgURL = URL.createObjectURL(imageFile);
+    setLoading(true);
+    let data = await postImageFile(imageFile)
+    if(!data) router.push('/404');
+    router.push({
+      pathname: "/success",
+      query: {id: data.imageID, clientImg: imgURL},
+    })
+    setLoading(false);
+    return;
   }
   let clickFileInput = () => {
     fileInputRef.current.click();
@@ -146,7 +152,7 @@ export default function Home() {
         <title>Upload your image here!</title>
       </Head>
       <main className={style.container}>
-        {/* <Loader /> */}
+        {loading && <Loader />}
         <h1>Upload your image</h1>
         <div className={style.fileClarifications}>
           <h2>File should be a valid image</h2>
