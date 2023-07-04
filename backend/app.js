@@ -1,9 +1,16 @@
 const express = require("express");
+const cors = require("cors");
 const connectDB = require("./config/db");
 const { PORT } = require("./config/env");
 const errorHandler = require("./middleware/errorMiddleware");
 const app = express();
 
+const corsoption = {
+  origin: ["http://localhost:3000"],
+  credentials: true,
+  optionSuccessStatus: 200,
+  methods: ["GET", "POST"]
+}
 
 let startServer = async () => {
   try {
@@ -18,7 +25,7 @@ let startServer = async () => {
 
 //* Set up possible routes for application
 app.use("/image", require("./routes/imageRoute"));
-
+app.use(cors(corsoption))
 
 app.use(errorHandler);
 
