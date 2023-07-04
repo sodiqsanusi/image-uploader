@@ -8,11 +8,16 @@ import { useEffect, useRef, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import { checkFileSize, checkFileType } from '@/utils/fileHelper';
 import "react-toastify/dist/ReactToastify.css";
+import { postImageFile } from '@/utils/requestHelper';
+import { useRouter } from 'next/router';
 
 export default function Home() {
 
+  let router = useRouter();
   let fileInputRef = useRef(null);
   let dropzone = useRef(null);
+  let zoneImage = useRef(null);
+  let zoneText = useRef(null);
 
   let [clientError, setClientError] = useState({
     error: false,
@@ -30,7 +35,7 @@ export default function Home() {
       dropzone.current.removeEventListener("dragover", handleDragOver);
       dropzone.current.removeEventListener("drop", handleDrop);
       dropzone.current.removeEventListener("dragenter", handleDragEnter);
-      dropzone.current.removeEventListener("dragenter", handleDragEnter);
+      dropzone.current.removeEventListener("dragleave", handleDragLeave);
     }
   }, [])
 
@@ -61,21 +66,19 @@ export default function Home() {
   }
 
   let handleDragEnter = (e) => {
+    if( (e.target == zoneImage.current) || (e.target == zoneText.current)) return;
     e.preventDefault();
     e.stopPropagation();
 
-    if(e.target === dropzone.current){
-      setDragging(true);
-    }
+    setDragging(true)
   }
 
   let handleDragLeave = (e) => {
+    if((e.target == zoneImage.current) || (e.target == zoneText.current)) return;
     e.preventDefault();
     e.stopPropagation();
-
-    if(e.target != dropzone.current){
-      setDragging(false);
-    }
+    
+    setDragging(false);
   }
 
   let handleAddFile = async (sentFileList) => {
@@ -108,7 +111,12 @@ export default function Home() {
       return;
     }
     ////doneTodo: If any of the checks fail, send an error toast with the right message and exit the upload process
-    console.log(imageFile);
+    if(imageFile){
+      let res = await postImageFile(imageFile)
+      console.log(res)
+      return;
+    }
+    router.push('/404');
   }
   let clickFileInput = () => {
     fileInputRef.current.click();
@@ -152,8 +160,9 @@ export default function Home() {
                 src={mainImage}
                 alt="Drag and drop your image here to upload it"
                 priority
+                ref={zoneImage}
               />
-              {dragging ? <p>Drop to upload your image</p> : <p>Drag & drop your image here</p>}
+                <p ref={zoneText}>{dragging ? "Drop to upload your image" : "Drag & drop your image here"}</p> 
             </>
         </section>
 

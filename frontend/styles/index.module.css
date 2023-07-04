@@ -45,6 +45,10 @@
 }
 .activeImageDrop{
   border-color: var(--darkGrey);
+  background-color: #50545b;
+} .activeImageDrop p{
+  color: var(--lightBlue);
+
 }
 
 .imageDrop ~ p {
