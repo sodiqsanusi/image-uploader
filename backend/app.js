@@ -6,7 +6,7 @@ const errorHandler = require("./middleware/errorMiddleware");
 const app = express();
 
 const corsOptions = {
-  origin: ["http://localhost:3000", "https://imageuploader-challenge.netlify.app/"],
+  origin: ["http://localhost:3000", "https://imageuploader-challenge.netlify.app"],
   credentials: true,
   optionSuccessStatus: 200,
   methods: ["GET", "POST"]
