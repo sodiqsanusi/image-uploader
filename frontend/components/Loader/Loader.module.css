@@ -18,6 +18,7 @@
   flex-direction: column;
   row-gap: .75em;
   width: 70%;
+  max-width: 420px;
   padding: 2em 1.5em;
   border-radius: 12px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);

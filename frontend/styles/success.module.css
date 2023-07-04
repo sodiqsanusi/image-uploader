@@ -34,6 +34,8 @@
 
 .copyLinkContainer {
   width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -59,10 +61,16 @@
   outline: none;
   padding: .75em 0;
   color: var(--white);
-  background-color: var(--deepBlue);
 }.copyLinkContainer button:hover, .copyLinkContainer button:focus{
   opacity: 80%;
 } .copyLinkContainer svg{
   width: 1rem;
   height: 1rem;
+}
+
+.copyBtn{
+  background-color: var(--deepBlue);
+} 
+.btnCopied{
+  background-color: #219653;
 }
