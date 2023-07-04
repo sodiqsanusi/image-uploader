@@ -5,12 +5,13 @@ const { PORT } = require("./config/env");
 const errorHandler = require("./middleware/errorMiddleware");
 const app = express();
 
-const corsoption = {
-  origin: ["http://localhost:3000"],
+const corsOptions = {
+  origin: ["http://localhost:3000", "https://imageuploader-challenge.netlify.app/"],
   credentials: true,
   optionSuccessStatus: 200,
   methods: ["GET", "POST"]
 }
+app.use(cors(corsOptions));
 
 let startServer = async () => {
   try {
@@ -25,7 +26,6 @@ let startServer = async () => {
 
 //* Set up possible routes for application
 app.use("/image", require("./routes/imageRoute"));
-app.use(cors(corsoption))
 
 app.use(errorHandler);
 
