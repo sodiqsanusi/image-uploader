@@ -35,7 +35,7 @@ const Success = () => {
             src={clientImg} priority
             alt="The image uploaded from your device"
             width={375}
-            height={342}
+            height={500}
           />
         </div>
         <div className={styles.copyLinkContainer}>
