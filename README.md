@@ -52,7 +52,7 @@ Decided to start with building the backend of the application
 
 At this point, I felt I was majorly done with the backend (lol), and started with the frontend interface. This was pretty routine, so I won't bore you with it.
 
-Saw (~~shege~~) learning opportunities🙂 when I wanted to use the backend APIs in the frontend application. Apparently, I didn't know about CORS and was getting lots of errors due to that.
+Saw ~~shege~~ learning opportunities🙂 when I wanted to use the backend APIs in the frontend application. Apparently, I didn't know about CORS and was getting lots of errors due to that.
 
 In summary, I actually had lots of issues building this out—majorly due to my lack of experience in building fullstack applications, and I'm just excited that I was able to solve these issues myself while building the app.
 
